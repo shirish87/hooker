@@ -1,0 +1,20 @@
+{
+  "name": "hooker",
+  "version": "1.0.0",
+  "description": "Initiates and loads plugins that implement the required interface",
+  "main": "lib/hooker.js",
+  "directories": {
+    "lib": "./lib/hooker"
+  },
+  "scripts": {
+    "test": "DEBUG=hooker mocha --reporter spec --bail"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^1.9.1",
+    "debug": "^0.8.0",
+    "lodash": "^2.4.1",
+    "sinon": "^1.9.1"
+  }
+}
