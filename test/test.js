@@ -21,57 +21,56 @@ afterEach(function () {
 
 describe("Module Load", function () {
 
-//    it("Completes without timeout", function (done) {
-//        var hooker = new Hooker(['done']);
-//        hooker.on('done', function (app, config) {
-//            done();
-//        });
-//
-//        hooker.emit('done', {}, {});
-//    });
-//
-//
-//    it("Completes with timeout", function (done) {
-//        var hooker = new Hooker(['done']);
-//        hooker.on('done', { timeout: 1000 }, function (app, config, complete) {
-//            clock.tick(999);
-//
-//            complete();
-//            done();
-//        });
-//
-//        hooker.emit('done', {}, {});
-//    });
-//
-//
-//    it("Completes within timeout", function (done) {
-//        var hooker = new Hooker(['done']);
-//        hooker.on('done', { timeout: 1000 }, function (app, config, complete) {
-//            clock.tick(999);
-//
-//            complete();
-//            done();
-//        });
-//
-//        hooker.emit('done', {}, {});
-//    });
+    it("Completes without timeout", function (done) {
+        var hooker = new Hooker(['done']);
+        hooker.hook('done', function (app, config) {
+            done();
+        });
+
+        hooker.invoke('done', {}, {});
+    });
+
+
+    it("Completes with timeout", function (done) {
+        var hooker = new Hooker(['done']);
+        hooker.hook('done', { timeout: 1000 }, function (app, config, complete) {
+            clock.tick(999);
+
+            complete();
+            done();
+        });
+
+        hooker.invoke('done', {}, {});
+    });
+
+
+    it("Completes within timeout", function (done) {
+        var hooker = new Hooker(['done']);
+        hooker.hook('done', { timeout: 1000 }, function (app, config, complete) {
+            clock.tick(999);
+
+            complete();
+            done();
+        });
+
+        hooker.invoke('done', {}, {});
+    });
 
     it("Throws error on timeout", function (done) {
         var hooker = new Hooker(['done']);
 
-        hooker.on('done', { timeout: 500 }, function (app, config, complete) {
-            console.log('ondone', arguments);
-            clock.tick(1005);
-//            complete();
+        hooker.hook('done', { timeout: 1000 }, function (app, config, complete) {
+            clock.tick(1001);
+            complete();
         });
 
-        hooker.on('error', function (err) {
-            console.log('onerror', arguments);
+        hooker.hook('error', function (err) {
             expect(err).to.be.an('object');
+            expect(err.toString()).to.equal('Error: Timeout waiting for event: done');
             done();
         });
 
         hooker.seal();
-        hooker.emit('done', {}, {});
+        hooker.invoke('done', {}, {});
     });
 });
