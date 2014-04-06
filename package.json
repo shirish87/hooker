@@ -1,7 +1,7 @@
 {
     "name": "hooker",
     "version": "1.0.0",
-    "description": "Initiates and loads plugins that implement the required interface",
+    "description": "Tiny utility for registering and invoking hooks. Supports (numeric) priority-ordered and time-restricted execution of hooks.",
     "main": "lib/hooker.js",
     "directories": {
         "lib": "./lib/hooker"
@@ -9,7 +9,7 @@
     "scripts": {
         "test": "DEBUG=hooker mocha --reporter spec"
     },
-    "author": "",
+    "author": "Shirish Kamath",
     "license": "MIT",
     "dependencies": {
         "debug": "^0.8.0"
