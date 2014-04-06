@@ -1,6 +1,6 @@
 
 
-var Hooker = require('../lib/hooker')
+var Hooker = require('../lib/index')
   , chai = require('chai')
   , sinon = require('sinon')
   , expect = chai.expect

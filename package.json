@@ -3,9 +3,6 @@
     "version": "1.0.0",
     "description": "Tiny utility for registering and invoking hooks. Supports (numeric) priority-ordered and time-restricted execution of hooks.",
     "main": "lib/hooker.js",
-    "directories": {
-        "lib": "./lib/hooker"
-    },
     "scripts": {
         "test": "DEBUG=hooker mocha --reporter spec"
     },

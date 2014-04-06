@@ -1,0 +1,10 @@
+{
+  "name": "hooker",
+  "version": "1.0.0",
+  "dependencies": {
+    "debug": {
+      "version": "0.8.0",
+      "from": "debug@"
+    }
+  }
+}
