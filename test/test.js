@@ -1,6 +1,6 @@
 
 
-var Hooker = require('../lib/index')
+var Hooker = require('../index')
   , chai = require('chai')
   , sinon = require('sinon')
   , expect = chai.expect
@@ -140,5 +140,55 @@ describe("Module Load", function () {
         hooker.invoke('event1');
         hooker.invoke('event2');
         hooker.invoke('event3');
+    });
+
+    it("Walks multiple hooks in priority-order", function (done) {
+        var hooker = new Hooker(function (err) {
+            expect(err).to.be.an('undefined');
+            done();
+        });
+
+        hooker.hook('event1', { priority: 6 }, function () {
+            console.log('event1 p6 invoked');
+        });
+
+        hooker.hook('event1', { priority: 4, track: true }, function (complete) {
+            console.log('event1 p4 invoked');
+            complete();
+        });
+
+        hooker.hook('event1', { priority: 10 }, function () {
+            console.log('event1 p10 invoked');
+        });
+
+        hooker.hook('event2', function () {
+            console.log('event2 p5 (default) invoked');
+        });
+
+        hooker.hook('event2', { priority: 10 }, function () {
+            console.log('event2 p10 invoked');
+        });
+
+        hooker.hook('event3', function () {
+            console.log('event3 p5 (default) invoked');
+        });
+
+        var i = 0;
+        var expected = [ 'event3', 'event2', 'event2', 'event1', 'event1', 'event1' ];
+
+        hooker.walk([ 'event3', 'event2', 'event1' ], function (err, hookData) {
+            if (err) {
+                done(err);
+                return false;
+            }
+
+            if (i === 5) {
+                expect(hookData.event).to.equal(expected[i - 1]);
+                done();
+            }
+
+            i++;
+            return true;
+        });
     });
 });
