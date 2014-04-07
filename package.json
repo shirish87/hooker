@@ -1,6 +1,6 @@
 {
     "name": "hooker",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "description": "Tiny utility for registering and invoking hooks. Supports (numeric) priority-ordered and time-restricted execution of hooks.",
     "main": "lib/hooker.js",
     "scripts": {
