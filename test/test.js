@@ -191,4 +191,28 @@ describe("Module Load", function () {
             return true;
         });
     });
+
+
+
+    it("Handles multiple hooks with tracking on same event", function (done) {
+        var hooker = new Hooker(function (err) {
+            expect(err).to.be.an('undefined');
+            done();
+        });
+
+        hooker.hook('event1', { track: true }, function (app, config, complete) {
+            clock.tick(1000);
+            console.log('event1-track invoked');
+            complete();
+        });
+
+        hooker.hook('event1', { timeout: 1000 }, function (app, config, complete) {
+            console.log('event1-timeout invoked');
+            clock.tick(999);
+            complete();
+        });
+
+        console.log('INVOKING event1');
+        hooker.invoke('event1', {}, {});
+    });
 });
